@@ -113,9 +113,8 @@ class UserService{
             "token": token
         }
 
-        tokenList[token] = response;
 
-        return tokenList;
+        return response;
 
     }
 
