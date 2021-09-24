@@ -1,7 +1,5 @@
-import {Request, Response, } from "express"
-import { User } from "../entities/User";
-import { UsersRepositories } from "../repositories/UserReporitory";
-import { UserService } from "../services/UserService"
+import {Request, Response, } from "express";
+import { UserService } from "../services/UserService";
 
 
 class UserController {

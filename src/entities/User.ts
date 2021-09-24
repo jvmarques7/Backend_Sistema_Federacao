@@ -56,6 +56,31 @@ class User {
     @Column({
         nullable: true,
     })
+    naturalidade: string;
+
+    @Column({
+        nullable: true,
+    })
+    clube: string;
+
+    @Column({
+        nullable: true,
+    })
+    telefone: string;
+    
+    @Column({
+        nullable: true,
+    })
+    celular: string;
+
+    @Column({
+        nullable: true,
+    })
+    passaporte: string;
+
+    @Column({
+        nullable: true,
+    })
     modalidade_id: string;
 
     @JoinColumn({name: "modalidade_id"})
