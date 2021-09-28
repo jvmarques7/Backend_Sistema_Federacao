@@ -56,16 +56,16 @@ class UserService{
 //         })
 //     }
 
-async update({users, id, endereco, modalidade, categoria, atuacao}){
+async update({users, email, endereco, modalidade, categoria, atuacao}){
     const userRepository = getCustomRepository(UsersRepositories);
     const updateUser = getCustomRepository(UsersRepositories);
     const res = new Response();
     
     try {
-      const updateUser = await userRepository.findOne({ where: { id } });
+      const updateUser = await userRepository.findOne({ where: { email } });
       const {
         nomeCompleto,
-        email,
+        newEmail,
         // firstPhone,
         dt_nascimento,
         cpf,
@@ -78,7 +78,7 @@ async update({users, id, endereco, modalidade, categoria, atuacao}){
       updateUser.rg = rg || users.rg;
       updateUser.nomeCompleto = nomeCompleto || users.nomeCompleto;
     //   updateUser.first_phone = firstPhone ? firstPhone : null;
-      updateUser.email = email || users.email;
+      updateUser.email = newEmail || users.newEmail;
     //   updateUser.second_phone = secondPhone ? secondPhone : null;
     //   updateUser.mobile_phone = mobilePhone || users.mobilePhone;
       updateUser.dt_nascimento = dt_nascimento || users.dt_nascimento;
@@ -104,7 +104,7 @@ async update({users, id, endereco, modalidade, categoria, atuacao}){
           cpf: newUser.cpf,
           dt_nasimcneto: newUser.dt_nascimento,
           rg: newUser.rg,
-          email: newUser.email,
+          email: newUser.newEmail,
         //   firtPhone: newUser.first_phone ? newUser.first_phone : null,
         //   secondPhone: newUser.second_phone ? newUser.second_phone : null,
         //   mobilePhone: newUser.mobile_phone,
@@ -185,42 +185,40 @@ async complete({nomeCompleto, rg, cpf, nacionalidade, dt_nascimento, sexo, /*mod
     async authenticate({email, password} : IAuthenticete){
         const usersRepositories = getCustomRepository(UsersRepositories);
 
-        const user = await usersRepositories.findOne({
-            email
-        });
+        var response = {"status": "Logged in", "token": "", "error": "Login Incorreto"};
 
-        if( !user ){
-            throw new Error("Email ou senha incorretas!")
-        }
-
-        const passwordMatch = await compare(password, user.password);
-
-        if(!password){
-            throw new Error("Email ou senha incorretas!")
-        }
-
-        const token = sign({
-            email: user.email
-        }, 
-            process.env.SECRET,
-        {
-           subject: user.id,
-           expiresIn: "86400" 
-        }
-        );
-
-        /* const refreshToken = sign({
-            email: user.email
-        }, 
-            process.env.REFRESHTOKEN,
-        {
-            expiresIn: "86400"
-        }
-        ); */
-
-        const response = {
-            "status": "Logged in",
-            "token": token
+        try{
+            const user = await usersRepositories.findOne({
+                email
+            });
+    
+            if( !user ){
+                throw new Error("Email ou senha incorretas!")
+            }
+    
+            const passwordMatch = await compare(password, user.password);
+    
+            if(!passwordMatch){
+                throw new Error("Email ou senha incorretas!")
+            }
+    
+            const token = sign({
+                email: user.email
+            }, 
+                process.env.SECRET,
+            {
+               subject: user.id,
+               expiresIn: "86400" 
+            }
+            );
+    
+            response = {
+                "status": "Logged in",
+                "token": token,
+                "error": ""
+            }
+        }catch(err){
+            return response.error
         }
 
 

@@ -38,14 +38,13 @@ class UserController {
     // }
 
     async update(req: Request, res: Response) {
-        const { id } = req.params;
-        const { users, endereco, modalidade, atuacao, categoria } = req.body;
+        const { users, email, endereco, modalidade, atuacao, categoria } = req.body;
 
         const userService = new UserService();
 
         const updateUser = userService.update({
             users,
-            id,
+            email,
             endereco, 
             modalidade,
             atuacao,
@@ -75,6 +74,8 @@ class UserController {
             email,
             password
         });
+
+        console.log(res.json(token));
 
         return res.json(token);
     }
