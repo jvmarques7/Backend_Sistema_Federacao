@@ -18,13 +18,13 @@ router.post("/modalidade", modalidadeController.create);
 router.post("/categoria", categoriaController.create);
 router.post("/atuacao", atuacaoController.create);
 router.post("/user", userController.create);
-router.put("/completar_cadastro", userController.update);
+router.put("/completar_cadastro/:id", userController.update);
 router.post("/user_admin", userAdminController.create);
 
 // router.put("/user/:email", userController.complete);
 
 router.post("/login", userController.authenticate);
-router.post("/intranet", userAdminController.authenticate)
+router.post("/intranet", userAdminController.authenticate);
 
 router.get("/users", userController.list);
 
