@@ -20,6 +20,8 @@ router.post("/atuacao", atuacaoController.create);
 router.post("/user", userController.create);
 router.post("/endereco", userController.create);
 router.put("/completar_cadastro", userController.update);
+
+router.put("/buscar_cpf/:cpf", userController.listByCpf);
 router.post("/user_admin", userAdminController.create);
 
 // router.put("/user/:email", userController.complete);

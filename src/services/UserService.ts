@@ -29,7 +29,7 @@ interface UserUpdate {
   nacionalidade: string;
   atuacao_id: number;
   modalidade_id: number;
-  categoria_id: number
+  categoria_id: number;
 }
 
 interface IUserUpdate {
@@ -50,7 +50,6 @@ interface IAuthenticete {
 }
 
 class UserService {
-
   async update(user: UserUpdate) {
     const userRepository = getCustomRepository(UsersRepositories);
     const res: Response = null;
@@ -86,7 +85,7 @@ class UserService {
 
       const newUser = await userRepository.save(updateUser);
       //   const newAddress = await updateAddress.save();
-      
+
       return {
         id: newUser.id,
         name: newUser.nomeCompleto,
@@ -103,7 +102,7 @@ class UserService {
         nacionalidade: newUser.nacionalidade,
         atuacao_id: newUser.atuacao_id,
         modalidade_id: newUser.modalidade_id,
-        categoria_id: newUser.categoria_id
+        categoria_id: newUser.categoria_id,
       };
     } catch (err) {
       const error = new Error(err);
@@ -149,6 +148,17 @@ class UserService {
     const usersRepositories = getCustomRepository(UsersRepositories);
 
     const users = await usersRepositories.find();
+
+    return users;
+  }
+
+  async showByCpf(cpf: string) {
+    const usersRepositories = getCustomRepository(UsersRepositories);
+
+    const users = await usersRepositories
+      .createQueryBuilder("users")
+      .where("users.cpf like :cpf", { cpf: `%${cpf}%` })
+      .getMany();
 
     return users;
   }

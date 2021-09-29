@@ -35,9 +35,25 @@ class UserController {
   }
 
   async update(request, response) {
-
-    const { cpf, rg, email, name, dt_nascimento, id, naturalidade, clube, sexo, telefone, celular, passaporte, nacionalidade,atuacao_id, modalidade_id, categoria_id } = request.body;
-    console.log(request.body)
+    const {
+      cpf,
+      rg,
+      email,
+      name,
+      dt_nascimento,
+      id,
+      naturalidade,
+      clube,
+      sexo,
+      telefone,
+      celular,
+      passaporte,
+      nacionalidade,
+      atuacao_id,
+      modalidade_id,
+      categoria_id,
+    } = request.body;
+    console.log(request.body);
     const newUser: UserUpdate = {
       id,
       cpf,
@@ -54,7 +70,7 @@ class UserController {
       nacionalidade,
       atuacao_id,
       modalidade_id,
-      categoria_id
+      categoria_id,
     };
     const userService = new UserService();
 
@@ -67,6 +83,15 @@ class UserController {
     const userService = new UserService();
 
     const usersList = await userService.show();
+
+    return res.json(usersList);
+  }
+
+  async listByCpf(req: Request, res: Response) {
+    const userService = new UserService();
+    const { cpf } = req.params;
+
+    const usersList = await userService.showByCpf(cpf);
 
     return res.json(usersList);
   }
