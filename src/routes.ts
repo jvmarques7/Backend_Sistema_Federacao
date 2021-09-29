@@ -18,6 +18,7 @@ router.post("/modalidade", modalidadeController.create);
 router.post("/categoria", categoriaController.create);
 router.post("/atuacao", atuacaoController.create);
 router.post("/user", userController.create);
+router.post("/endereco", userController.create);
 router.put("/completar_cadastro", userController.update);
 router.post("/user_admin", userAdminController.create);
 
