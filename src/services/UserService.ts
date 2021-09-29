@@ -5,6 +5,7 @@ import { UsersRepositories } from "../repositories/UserReporitory";
 import { User } from "../entities/User";
 import { Request, Response, response } from "express";
 import { EnderecoRepositories } from "../repositories/EnderecoRepository";
+import { EnderecoService } from "./EnderecoService";
 
 const tokenList = {};
 
@@ -32,6 +33,17 @@ interface UserUpdate {
   categoria_id: number;
 }
 
+interface Address {
+  bairro: string;
+  logradouro: string;
+  cep: string;
+  numero: number;
+  cidade: string;
+  estado: string;
+  complemento: string;
+  user_id: string;
+}
+
 interface IUserUpdate {
   nomeCompleto: string;
   rg: string;
@@ -50,7 +62,7 @@ interface IAuthenticete {
 }
 
 class UserService {
-  async update(user: UserUpdate) {
+  async update(user: UserUpdate, address: Address) {
     const userRepository = getCustomRepository(UsersRepositories);
     const res: Response = null;
 
@@ -73,18 +85,10 @@ class UserService {
       updateUser.modalidade_id = user.modalidade_id;
       updateUser.categoria_id = user.categoria_id;
 
-      // const updateEndereco = await EnderecoRepositories.findOne({
-      //   where: { user_id: user.id },
-      // });
-
-      //   const { cep, logradouro, number, complemento } = endereco;
-      //   updateAddress.cep = endereco.cep;
-      //   updateAddress.logradouro = endereco.logradouro;
-      //   updateAddress.numero = endereco.number;
-      //   updateAddress.complemento = endereco.complemento;
+      const addressService = new EnderecoService();
+      const returnAddress = addressService.update(address);
 
       const newUser = await userRepository.save(updateUser);
-      //   const newAddress = await updateAddress.save();
 
       return {
         id: newUser.id,

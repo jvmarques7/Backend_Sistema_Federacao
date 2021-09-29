@@ -20,6 +20,17 @@ interface UserUpdate {
   categoria_id: number;
 }
 
+interface AddressUpdate {
+  bairro: string;
+  logradouro: string;
+  cep: string;
+  numero: number;
+  cidade: string;
+  estado: string;
+  complemento: string;
+  user_id: string;
+}
+
 class UserController {
   async create(req: Request, res: Response) {
     const { email, password } = req.body;
@@ -52,6 +63,13 @@ class UserController {
       atuacao_id,
       modalidade_id,
       categoria_id,
+      bairro,
+      logradouro,
+      cep,
+      numero,
+      cidade,
+      estado,
+      complemento,
     } = request.body;
     console.log(request.body);
     const newUser: UserUpdate = {
@@ -72,9 +90,20 @@ class UserController {
       modalidade_id,
       categoria_id,
     };
+
+    const newAddress: AddressUpdate = {
+      bairro,
+      logradouro,
+      cep,
+      numero,
+      cidade,
+      estado,
+      complemento,
+      user_id: id,
+    };
     const userService = new UserService();
 
-    const updateUser = await userService.update(newUser);
+    const updateUser = await userService.update(newUser, newAddress);
 
     return response.status(200).json(updateUser);
   }
