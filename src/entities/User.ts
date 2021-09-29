@@ -81,7 +81,7 @@ class User {
     @Column({
         nullable: true,
     })
-    modalidade_id: string;
+    modalidade_id: number;
 
     @JoinColumn({name: "modalidade_id"})
     @ManyToOne(() => Modalidade)
@@ -90,7 +90,7 @@ class User {
     @Column({
         nullable: true,
     })
-    categoria_id :string;
+    categoria_id :number;
 
     @JoinColumn({name: "categoria_id"})
     @ManyToOne(() => Categoria)
@@ -99,7 +99,7 @@ class User {
     @Column({
         nullable: true,
     })
-    atuacao_id :string;
+    atuacao_id :number;
 
     @JoinColumn({name: "atuacao_id"})
     @ManyToOne(() => Atuacao)

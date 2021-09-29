@@ -1,13 +1,23 @@
 import { Request, Response } from "express";
 import { UserService } from "../services/UserService";
 
-interface User {
+interface UserUpdate {
   id?: string;
   name: string;
   email: string;
   cpf: string;
   rg: string;
   dt_nascimento: Date;
+  naturalidade: string;
+  clube: string;
+  sexo: string;
+  telefone: string;
+  celular: string;
+  passaporte: string;
+  nacionalidade: string;
+  atuacao_id: number;
+  modalidade_id: number;
+  categoria_id: number;
 }
 
 class UserController {
@@ -24,44 +34,33 @@ class UserController {
     return res.json(users);
   }
 
-  // async complete(req: Request, res: Response){
-  //     const {nomeCompleto, rg, cpf, nacionalidade, dt_nascimento, sexo/*, modalidade_id, categoria_id, atuacao_id*/} = req.body;
+  async update(request, response) {
 
-  //     const userService = new UserService();
-
-  //     const users = await userService.complete({
-  //         nomeCompleto,
-  //         rg,
-  //         cpf,
-  //         nacionalidade,
-  //         dt_nascimento,
-  //         sexo
-  //         // modalidade_id,
-  //         // categoria_id,
-  //         // atuacao_id
-  //     });
-
-  //     return res.json(users);
-  // }
-
-  async update(req: Request, res: Response) {
-    const { id } = req.params;
-    const { cpf, rg, email, name, dt_nascimento } = req.body;
-
-    console.log(id);
-    const newUser: User = {
+    const { cpf, rg, email, name, dt_nascimento, id, naturalidade, clube, sexo, telefone, celular, passaporte, nacionalidade,atuacao_id, modalidade_id, categoria_id } = request.body;
+    console.log(request.body)
+    const newUser: UserUpdate = {
       id,
       cpf,
       rg,
       email,
       name,
       dt_nascimento,
+      naturalidade,
+      clube,
+      sexo,
+      telefone,
+      celular,
+      passaporte,
+      nacionalidade,
+      atuacao_id,
+      modalidade_id,
+      categoria_id
     };
     const userService = new UserService();
 
-    const updateUser = userService.update(newUser);
+    const updateUser = await userService.update(newUser);
 
-    return res.status(200).json(updateUser);
+    return response.status(200).json(updateUser);
   }
 
   async list(req: Request, res: Response) {

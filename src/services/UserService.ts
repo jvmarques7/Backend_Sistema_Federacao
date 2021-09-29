@@ -4,6 +4,7 @@ import { getCustomRepository } from "typeorm";
 import { UsersRepositories } from "../repositories/UserReporitory";
 import { User } from "../entities/User";
 import { Request, Response, response } from "express";
+import { EnderecoRepositories } from "../repositories/EnderecoRepository";
 
 const tokenList = {};
 
@@ -19,21 +20,19 @@ interface UserUpdate {
   cpf: string;
   rg: string;
   dt_nascimento: Date;
+  naturalidade: string;
+  clube: string;
+  sexo: string;
+  telefone: string;
+  celular: string;
+  passaporte: string;
+  nacionalidade: string;
+  atuacao_id: number;
+  modalidade_id: number;
+  categoria_id: number
 }
 
 interface IUserUpdate {
-  nomeCompleto: string;
-  rg: string;
-  cpf: string;
-  nacionalidade: string;
-  dt_nascimento: Date;
-  sexo: string;
-  // modalidade_id: string;
-  // categoria_id: string;
-  // atuacao_id: string;
-}
-
-interface IUserComplete {
   nomeCompleto: string;
   rg: string;
   cpf: string;
@@ -51,18 +50,6 @@ interface IAuthenticete {
 }
 
 class UserService {
-  // async complet({nomeCompleto, rg, cpf, nacionalidade, dt_nascimento, sexo}:IUserUpdate){
-
-  //     const userRepository = getCustomRepository(UsersRepositories);
-  //         const user = userRepository.findOne({where : {email} });
-  //             nomeCompleto,
-  //             rg,
-  //             cpf,
-  //             nacionalidade,
-  //             dt_nascimento,
-  //             sexo
-  //         })
-  //     }
 
   async update(user: UserUpdate) {
     const userRepository = getCustomRepository(UsersRepositories);
@@ -74,25 +61,32 @@ class UserService {
       updateUser.cpf = user.cpf;
       updateUser.rg = user.rg;
       updateUser.nomeCompleto = user.name;
-      //   updateUser.first_phone = firstPhone ? firstPhone : null;
       updateUser.email = user.email;
-      //   updateUser.second_phone = secondPhone ? secondPhone : null;
-      //   updateUser.mobile_phone = mobilePhone || users.mobilePhone;
       updateUser.dt_nascimento = new Date(user.dt_nascimento);
+      updateUser.naturalidade = user.naturalidade;
+      updateUser.clube = user.clube;
+      updateUser.sexo = user.sexo;
+      updateUser.telefone = user.telefone;
+      updateUser.celular = user.celular;
+      updateUser.passaporte = user.passaporte;
+      updateUser.nacionalidade = user.nacionalidade;
+      updateUser.atuacao_id = user.atuacao_id;
+      updateUser.modalidade_id = user.modalidade_id;
+      updateUser.categoria_id = user.categoria_id;
 
-      //   const updateEndereco = await Endereco.findOne({
-      //     where: { user_id: users.id },
-      //   });
+      // const updateEndereco = await EnderecoRepositories.findOne({
+      //   where: { user_id: user.id },
+      // });
 
-      //   const { cep, logradouro, number, complemento } = address;
-      //   updateAddress.cep = cep || address.cep;
-      //   updateAddress.logradouro = logradouro || address.logradouro;
-      //   updateAddress.numero = number || address.number;
-      //   updateAddress.complemento = complemento || address.complemento;
+      //   const { cep, logradouro, number, complemento } = endereco;
+      //   updateAddress.cep = endereco.cep;
+      //   updateAddress.logradouro = endereco.logradouro;
+      //   updateAddress.numero = endereco.number;
+      //   updateAddress.complemento = endereco.complemento;
 
       const newUser = await userRepository.save(updateUser);
       //   const newAddress = await updateAddress.save();
-
+      
       return {
         id: newUser.id,
         name: newUser.nomeCompleto,
@@ -100,34 +94,22 @@ class UserService {
         dt_nascimento: newUser.dt_nascimento,
         rg: newUser.rg,
         email: newUser.email,
+        naturalidade: newUser.naturalidade,
+        clube: newUser.clube,
+        sexo: newUser.sexo,
+        telefone: newUser.telefone,
+        celular: newUser.celular,
+        passaporte: newUser.passaporte,
+        nacionalidade: newUser.nacionalidade,
+        atuacao_id: newUser.atuacao_id,
+        modalidade_id: newUser.modalidade_id,
+        categoria_id: newUser.categoria_id
       };
     } catch (err) {
       const error = new Error(err);
 
       return error;
     }
-  }
-
-  async complete({
-    nomeCompleto,
-    rg,
-    cpf,
-    nacionalidade,
-    dt_nascimento,
-    sexo /*modalidade_id, categoria_id, atuacao_id*/,
-  }: IUserComplete) {
-    const usersRepository = getCustomRepository(UsersRepositories);
-    const user = usersRepository.create({
-      nomeCompleto,
-      rg,
-      cpf,
-      nacionalidade,
-      dt_nascimento,
-      sexo,
-      // modalidade_id,
-      // categoria_id,
-      // atuacao_id
-    });
   }
 
   async execute({ email, password }: IUserRequest) {
@@ -170,13 +152,6 @@ class UserService {
 
     return users;
   }
-
-  // async update(){
-  //     const usersRepositories = getCustomRepository(UsersRepositories);
-
-  //     const users = await usersRepositories.update
-
-  // }
 
   async authenticate({ email, password }: IAuthenticete) {
     const usersRepositories = getCustomRepository(UsersRepositories);

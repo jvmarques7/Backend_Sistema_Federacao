@@ -16,6 +16,18 @@ class AtuacaoController{
         return res.json(atua);
     }
 
+    async list(req: Request, res: Response) {
+        const atuacaoService = new AtuacaoService();
+        const {id, atuacao} = req.body;
+    
+        const atuacaoList = await atuacao.show({
+            id,
+            atuacao
+        });
+    
+        return res.json(atuacaoList);
+      }
+
 }
 
 export {AtuacaoController};

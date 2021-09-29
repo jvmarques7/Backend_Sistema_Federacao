@@ -47,6 +47,17 @@ class AtuacaoService{
 
     }
 
+    async show(atuacao: IAtuacaoService){
+        const atuacaoRepository = getCustomRepository(AtuacaoRepositories);
+
+        try{
+            const findAtuacao = await atuacaoRepository.findOne(atuacao.id);
+            return atuacao;
+        }catch(err){
+            return "Atuacao não exite";
+        }
+    }
+
 }
 
 export { AtuacaoService };
