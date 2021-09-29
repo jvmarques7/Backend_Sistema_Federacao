@@ -40,6 +40,10 @@ class EnderecoService{
             return endereco;
         }
 
+    async update (req: Request, res: Response){
+        
+    }
+
 }
 
 export {EnderecoService}

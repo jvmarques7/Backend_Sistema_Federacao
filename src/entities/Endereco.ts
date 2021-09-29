@@ -7,25 +7,25 @@ class Endereco {
     @PrimaryColumn()
     readonly id: string;
 
-    @Column()
+    @Column({nullable: true,})
     cep: string;
 
-    @Column()
+    @Column({nullable: true,})
     logradouro: string;
 
-    @Column()
+    @Column({nullable: true,})
     complemento: string;
 
-    @Column()
+    @Column({nullable: true,})
     bairro: string;
 
-    @Column()
+    @Column({nullable: true,})
     numero: number;
 
-    @Column()
+    @Column({nullable: true,})
     cidade: string;
 
-    @Column()
+    @Column({nullable: true,})
     estado: string;
 
     @CreateDateColumn()

@@ -15,6 +15,7 @@ class EnderecoController {
             user_id} = req.body;
 
         const enderecoService = new EnderecoService();
+        console.log(user_id)
 
         const endereco = await enderecoService.execute({
             /*cep,
@@ -29,6 +30,7 @@ class EnderecoController {
 
         return res.json(endereco);
     }
+
 
 }
 
