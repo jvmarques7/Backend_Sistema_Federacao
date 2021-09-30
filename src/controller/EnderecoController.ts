@@ -1,6 +1,17 @@
 import {Request, Response, } from "express";
 import { EnderecoService } from "../services/EnderecoService";
 
+interface EnderecoUpdate {
+  bairro: string;
+  logradouro: string;
+  cep: string;
+  numero: number;
+  cidade: string;
+  estado: string;
+  complemento: string;
+  user_id: string;
+}
+
 
 class EnderecoController {
 
@@ -30,6 +41,36 @@ class EnderecoController {
 
         return res.json(endereco);
     }
+
+    async update(req: Request, res: Response) {
+        const {
+          bairro,
+          logradouro,
+          cep,
+          numero,
+          cidade,
+          estado,
+          complemento,
+          user_id
+        } = req.body;
+        console.log(req.body);
+
+        const newEndereco: EnderecoUpdate = {
+          bairro,
+          logradouro,
+          cep,
+          numero,
+          cidade,
+          estado,
+          complemento,
+          user_id,
+        };
+        const enderecoService = new EnderecoService();
+    
+        const updateEndereco = await enderecoService.update(newEndereco);
+    
+        return res.status(200).json(updateEndereco);
+      }
 
 
 }

@@ -12,6 +12,17 @@ interface IEnderecoRequest {
   user_id: string;
 }
 
+interface IenderecoUpdate{
+    cep: string;
+    logradouro: string;
+    complemento: string;
+    bairro: string;
+    numero: number;
+    cidade: string;
+    estado: string;
+    user_id: string;
+}
+
 class EnderecoService {
   async execute({
     /*cep, logradouro, complemento, bairro, numero, cidade, estado,*/ user_id,
@@ -40,29 +51,31 @@ class EnderecoService {
     return endereco;
   }
 
-  async update({
-    cep,
-    logradouro,
-    complemento,
-    bairro,
-    numero,
-    cidade,
-    estado,
-    user_id,
-  }) {
+  async update(endereco : IenderecoUpdate) {
     const enderecoRepository = getCustomRepository(EnderecoRepositories);
-    const enderecoUpdate = await enderecoRepository.findOne({ where: user_id });
+    const enderecoUpdate = await enderecoRepository.findOne(endereco.user_id);
 
-    enderecoUpdate.bairro = bairro;
-    enderecoUpdate.cep = cep;
-    enderecoUpdate.cidade = cidade;
-    enderecoUpdate.logradouro = logradouro;
-    enderecoUpdate.complemento = complemento;
-    enderecoUpdate.numero = numero;
-    enderecoUpdate.estado = estado;
+    enderecoUpdate.user_id = endereco.user_id;
+    enderecoUpdate.bairro = endereco.bairro;
+    enderecoUpdate.cep = endereco.cep;
+    enderecoUpdate.cidade = endereco.cidade;
+    enderecoUpdate.logradouro = endereco.logradouro;
+    enderecoUpdate.complemento = endereco.complemento;
+    enderecoUpdate.numero = endereco.numero;
+    enderecoUpdate.estado = endereco.estado;
 
-    const newAddress = enderecoRepository.save(enderecoUpdate);
-    return { newAddress };
+    const newAddress = await enderecoRepository.save(enderecoUpdate);
+
+    return {
+      user_id: newAddress.user_id,
+      bairro: newAddress.bairro,
+      cep: newAddress.cep,
+      cidade: newAddress.cidade,
+      logradouro: newAddress.logradouro,
+      complemento: newAddress.complemento,
+      numero: newAddress.numero,
+      estado: newAddress.estado
+    };
   }
 }
 

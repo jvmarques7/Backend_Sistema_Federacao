@@ -107,6 +107,7 @@ class UserService {
         atuacao_id: newUser.atuacao_id,
         modalidade_id: newUser.modalidade_id,
         categoria_id: newUser.categoria_id,
+        returnAddress
       };
     } catch (err) {
       const error = new Error(err);

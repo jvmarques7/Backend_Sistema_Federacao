@@ -22,6 +22,7 @@ router.post("/atuacao", atuacaoController.create);
 router.post("/user", userController.create);
 router.post("/endereco", enderecoController.create);
 router.put("/completar_cadastro", userController.update);
+router.put("/endereco_update", enderecoController.update);
 
 router.get("/buscar_cpf/:cpf", userController.listByCpf);
 router.post("/user_admin", userAdminController.create);
