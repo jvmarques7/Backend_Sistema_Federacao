@@ -15,20 +15,20 @@ interface UserUpdate {
   celular: string;
   passaporte: string;
   nacionalidade: string;
-  atuacao_id: number;
-  modalidade_id: number;
-  categoria_id: number;
+  atuacao_id: string;
+  modalidade_id: string;
+  categoria_id: string;
 }
 
 interface AddressUpdate {
   bairro: string;
   logradouro: string;
   cep: string;
-  numero: number;
+  numero: string;
   cidade: string;
   estado: string;
   complemento: string;
-  user_id: string;
+  id: string;
 }
 
 class UserController {
@@ -71,7 +71,6 @@ class UserController {
       estado,
       complemento,
     } = request.body;
-    console.log(request.body);
     const newUser: UserUpdate = {
       id,
       cpf,
@@ -99,13 +98,23 @@ class UserController {
       cidade,
       estado,
       complemento,
-      user_id: id,
+      id,
     };
     const userService = new UserService();
 
     const updateUser = await userService.update(newUser, newAddress);
 
     return response.status(200).json(updateUser);
+  }
+
+  async verifyIfRegistered(req: Request, res: Response){
+    const userService = new UserService();
+    const {email} = req.params;
+
+    const user = await userService.showById(email);
+    
+
+    return res.json(user);
   }
 
   async list(req: Request, res: Response) {
@@ -134,8 +143,6 @@ class UserController {
       email,
       password,
     });
-
-    console.log(res.json(token));
 
     return res.json(token);
   }

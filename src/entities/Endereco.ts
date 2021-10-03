@@ -1,5 +1,6 @@
-import {Entity, PrimaryColumn, Column, CreateDateColumn, UpdateDateColumn, JoinColumn, OneToOne} from "typeorm";
+import {Entity, PrimaryColumn, Column, CreateDateColumn, UpdateDateColumn, JoinColumn, OneToOne, ManyToOne} from "typeorm";
 import { v4 as uuid } from "uuid";
+import {User} from "./User"
 
 @Entity()
 class Endereco {
@@ -20,7 +21,7 @@ class Endereco {
     bairro: string;
 
     @Column({nullable: true,})
-    numero: number;
+    numero: string;
 
     @Column({nullable: true,})
     cidade: string;

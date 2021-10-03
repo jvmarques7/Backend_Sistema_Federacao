@@ -2,7 +2,7 @@ import { getCustomRepository } from "typeorm";
 import { AtuacaoRepositories } from "../repositories/AtuacaoRepository";
 
 interface IAtuacaoService{
-    id: number;
+    id: string;
     atuacao: string;
 }
 
@@ -47,15 +47,15 @@ class AtuacaoService{
 
     }
 
-    async show(atuacao: IAtuacaoService){
-        const atuacaoRepository = getCustomRepository(AtuacaoRepositories);
+    async showAtuacao(id: string){
+        const atuacaoRepositories = getCustomRepository(AtuacaoRepositories);
 
-        try{
-            const findAtuacao = await atuacaoRepository.findOne(atuacao.id);
-            return atuacao;
-        }catch(err){
-            return "Atuacao não exite";
-        }
+        const atuacao = await atuacaoRepositories
+        .createQueryBuilder("atuacao")
+        .where("atuacao.id like :id", { id: `%${id}%` })
+        .getOne();
+
+        return atuacao
     }
 
 }

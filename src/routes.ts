@@ -33,6 +33,12 @@ router.post("/login", userController.authenticate);
 router.post("/intranet", userAdminController.authenticate);
 
 router.get("/users", userController.list);
-router.get("/atuacao", atuacaoController.list);
+router.get("/endereco/:user_id", enderecoController.showEndereco)
+router.get("/find_user/:email", userController.verifyIfRegistered);
+
+
+router.get("/atuacao/:atuacao_id", atuacaoController.listAtuacao);
+router.get("/modalidade/:modalidade_id", modalidadeController.listModalidade);
+router.get("/categoria/:categoria_id", categoriaController.listarCategoria);
 
 export { router };

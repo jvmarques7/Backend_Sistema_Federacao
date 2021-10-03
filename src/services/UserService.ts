@@ -28,20 +28,20 @@ interface UserUpdate {
   celular: string;
   passaporte: string;
   nacionalidade: string;
-  atuacao_id: number;
-  modalidade_id: number;
-  categoria_id: number;
+  atuacao_id: string;
+  modalidade_id: string;
+  categoria_id: string;
 }
 
 interface Address {
   bairro: string;
   logradouro: string;
   cep: string;
-  numero: number;
+  numero: string;
   cidade: string;
   estado: string;
   complemento: string;
-  user_id: string;
+  id: string;
 }
 
 interface IUserUpdate {
@@ -157,6 +157,14 @@ class UserService {
     return users;
   }
 
+  async findUser(id: string) {
+    const usersRepositories = getCustomRepository(UsersRepositories);
+
+    const users = await usersRepositories.find({id});
+
+    return users;
+  }
+
   async showByCpf(cpf: string) {
     const usersRepositories = getCustomRepository(UsersRepositories);
 
@@ -168,10 +176,22 @@ class UserService {
     return users;
   }
 
-  async authenticate({ email, password }: IAuthenticete) {
+  async showById(email: string) {
     const usersRepositories = getCustomRepository(UsersRepositories);
 
-    var response = { status: "Logged in", token: "", error: "Login Incorreto" };
+    const users = await usersRepositories
+      .createQueryBuilder("users")
+      .where("users.email like :email", { email: `%${email}%` })
+      .getOne();
+
+    return users;
+  }
+
+  async authenticate({ email, password }: IAuthenticete) {
+    const usersRepositories = getCustomRepository(UsersRepositories);
+    var err;
+
+    var response = { "status": "Logged in", "token": "", "error": "Login Incorreto" };
 
     try {
       const user = await usersRepositories.findOne({
@@ -192,7 +212,7 @@ class UserService {
         {
           email: user.email,
         },
-        process.env.SECRET,
+          process.env.SECRET,
         {
           subject: user.id,
           expiresIn: "86400",
@@ -200,9 +220,9 @@ class UserService {
       );
 
       response = {
-        status: "Logged in",
-        token: token,
-        error: "",
+        "status": "Logged in",
+        "token": token,
+        "error": "",
       };
     } catch (err) {
       return response.error;

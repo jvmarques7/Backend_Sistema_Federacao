@@ -17,10 +17,10 @@ interface IenderecoUpdate{
     logradouro: string;
     complemento: string;
     bairro: string;
-    numero: number;
+    numero: string;
     cidade: string;
     estado: string;
-    user_id: string;
+    id: string;
 }
 
 class EnderecoService {
@@ -53,9 +53,11 @@ class EnderecoService {
 
   async update(endereco : IenderecoUpdate) {
     const enderecoRepository = getCustomRepository(EnderecoRepositories);
-    const enderecoUpdate = await enderecoRepository.findOne(endereco.user_id);
+    const id = endereco.id;
 
-    enderecoUpdate.user_id = endereco.user_id;
+    const enderecoUpdate = await enderecoRepository.findOne({where: {user_id: id}});
+
+    enderecoUpdate.user_id = endereco.id;
     enderecoUpdate.bairro = endereco.bairro;
     enderecoUpdate.cep = endereco.cep;
     enderecoUpdate.cidade = endereco.cidade;
@@ -63,6 +65,7 @@ class EnderecoService {
     enderecoUpdate.complemento = endereco.complemento;
     enderecoUpdate.numero = endereco.numero;
     enderecoUpdate.estado = endereco.estado;
+
 
     const newAddress = await enderecoRepository.save(enderecoUpdate);
 
@@ -76,6 +79,17 @@ class EnderecoService {
       numero: newAddress.numero,
       estado: newAddress.estado
     };
+  }
+
+  async showThis(user_id: string) {
+    const enderecoRepositories = getCustomRepository(EnderecoRepositories);
+
+    const endereco = await enderecoRepositories
+      .createQueryBuilder("endereco")
+      .where("endereco.user_id like :user_id", { user_id: `%${user_id}%` })
+      .getOne();
+
+    return endereco;
   }
 }
 

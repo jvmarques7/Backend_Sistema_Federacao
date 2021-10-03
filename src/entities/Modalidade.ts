@@ -5,7 +5,7 @@ import { v4 as uuid } from "uuid";
 class Modalidade {
 
     @PrimaryColumn()
-    id: number;
+    id: string;
 
     @Column()
     modalidade: string;

@@ -16,6 +16,15 @@ class CategoriaController{
         return res.json(categ);
     }
 
+    async listarCategoria(req: Request, res: Response) {
+        const categoriaService = new CategoriaService();
+        const {categoria_id} = req.params;
+    
+        const categoriaList = await categoriaService.showCategoria(categoria_id);
+    
+        return res.json(categoriaList);
+      }
+
 }
 
 export {CategoriaController};

@@ -1,8 +1,8 @@
 import { getCustomRepository } from "typeorm";
-import { CategoriasRepositories } from "../repositories/CategoriaRepository";
+import { CategoriaRepositories } from "../repositories/CategoriaRepository";
 
 interface ICategoriaService{
-    id: number;
+    id: string;
     categoria: string;
 }
 
@@ -10,7 +10,7 @@ class CategoriaService{
 
     async execute({id, categoria} : ICategoriaService){
         
-        const categoriaRepository = getCustomRepository(CategoriasRepositories);
+        const categoriaRepository = getCustomRepository(CategoriaRepositories);
 
         if(!id){
             throw new Error("Identificador incorreto!");
@@ -45,6 +45,17 @@ class CategoriaService{
 
         return categ;
 
+    }
+
+    async showCategoria(id: string){
+        const categoriaRepositories = getCustomRepository(CategoriaRepositories);
+
+        const categoria = await categoriaRepositories
+        .createQueryBuilder("categoria")
+        .where("categoria.id like :id", { id: `%${id}%` })
+        .getOne();
+
+        return categoria
     }
 
 }

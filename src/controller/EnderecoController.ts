@@ -5,11 +5,11 @@ interface EnderecoUpdate {
   bairro: string;
   logradouro: string;
   cep: string;
-  numero: number;
+  numero: string;
   cidade: string;
   estado: string;
   complemento: string;
-  user_id: string;
+  id: string;
 }
 
 
@@ -26,7 +26,6 @@ class EnderecoController {
             user_id} = req.body;
 
         const enderecoService = new EnderecoService();
-        console.log(user_id)
 
         const endereco = await enderecoService.execute({
             /*cep,
@@ -51,9 +50,8 @@ class EnderecoController {
           cidade,
           estado,
           complemento,
-          user_id
+          id
         } = req.body;
-        console.log(req.body);
 
         const newEndereco: EnderecoUpdate = {
           bairro,
@@ -63,13 +61,23 @@ class EnderecoController {
           cidade,
           estado,
           complemento,
-          user_id,
+          id,
         };
         const enderecoService = new EnderecoService();
     
         const updateEndereco = await enderecoService.update(newEndereco);
     
         return res.status(200).json(updateEndereco);
+      }
+
+      async showEndereco(req: Request, res: Response){
+        const enderecoService = new EnderecoService();
+        const {user_id} = req.params;
+
+        const endereco = await enderecoService.showThis(user_id);
+        
+    
+        return res.json(endereco);
       }
 
 

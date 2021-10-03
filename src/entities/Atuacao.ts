@@ -4,7 +4,7 @@ import {Column, CreateDateColumn, Entity, PrimaryColumn, UpdateDateColumn} from 
 class Atuacao {
 
     @PrimaryColumn()
-    id: number;
+    id: string;
 
     @Column()
     atuacao: string;

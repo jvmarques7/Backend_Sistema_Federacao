@@ -2,7 +2,6 @@ import {Entity, PrimaryColumn, Column, CreateDateColumn, UpdateDateColumn, JoinC
 import { v4 as uuid } from "uuid";
 import { Modalidade } from "./Modalidade";
 import { Categoria } from "./Categoria";
-import { Endereco } from "./Endereco";
 import { Atuacao } from "./Atuacao";
 
 @Entity("users")
@@ -81,7 +80,7 @@ class User {
     @Column({
         nullable: true,
     })
-    modalidade_id: number;
+    modalidade_id: string;
 
     @JoinColumn({name: "modalidade_id"})
     @ManyToOne(() => Modalidade)
@@ -90,7 +89,7 @@ class User {
     @Column({
         nullable: true,
     })
-    categoria_id :number;
+    categoria_id :string;
 
     @JoinColumn({name: "categoria_id"})
     @ManyToOne(() => Categoria)
@@ -99,7 +98,7 @@ class User {
     @Column({
         nullable: true,
     })
-    atuacao_id :number;
+    atuacao_id :string;
 
     @JoinColumn({name: "atuacao_id"})
     @ManyToOne(() => Atuacao)
@@ -114,15 +113,6 @@ class User {
         nullable: true,
     })
     updated_at: Date;
-
-    @Column({
-        nullable: true,
-    })
-    endereco_id :number;
-
-    @JoinColumn({name: "endereco_id"})
-    @ManyToOne(() => Endereco)
-    endereco: Endereco;
 
     constructor() {
         if(!this.id){

@@ -17,6 +17,15 @@ class ModalidadeController{
 
         return res.json(modal);
     }
+
+    async listModalidade(req: Request, res: Response) {
+        const modalidadeService = new ModalidadeService();
+        const {modalidade_id} = req.params;
+    
+        const modalidadeList = await modalidadeService.showModalidade(modalidade_id);
+    
+        return res.json(modalidadeList);
+      }
 }
 
 export {ModalidadeController};

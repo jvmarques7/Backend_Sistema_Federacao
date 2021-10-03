@@ -1,37 +1,20 @@
 import {MigrationInterface, QueryRunner, Table} from "typeorm";
 
-export class CreateEndereco1631760339599 implements MigrationInterface {
+export class CreateModalidade1633211764613 implements MigrationInterface {
 
     public async up(queryRunner: QueryRunner): Promise<void> {
         await queryRunner.createTable(
             new Table({
-                name:"endereco",
-                columns:[
+                name:"modalidade",
+                columns: [
                     {
                         name: "id",
                         type: "varchar",
-                        isPrimary: true,
-                        generationStrategy: "uuid"
+                        isPrimary: true                       
                     },
                     {
-                        name: "cep",
+                        name: "modalidade",
                         type: "varchar"
-                    },
-                    {
-                        name: "logradouro",
-                        type: "varchar"
-                    },
-                    {
-                        name: "complemento",
-                        type: "varchar"
-                    },
-                    {
-                        name: "bairro",
-                        type: "varchar"
-                    },
-                    {
-                        name: "numero",
-                        type: "integer"
                     },
                     {
                         name:"created_at",
@@ -45,11 +28,11 @@ export class CreateEndereco1631760339599 implements MigrationInterface {
                     }
                 ]
             })
-        );
+        )
     }
 
     public async down(queryRunner: QueryRunner): Promise<void> {
-        await queryRunner.dropTable("endereco");
+        await queryRunner.dropTable("modalidade");
     }
 
 }

@@ -1,8 +1,8 @@
 import { getCustomRepository } from "typeorm";
-import { ModalidadesRepositories } from "../repositories/ModalidadeRepository";
+import { ModalidadeRepositories } from "../repositories/ModalidadeRepository";
 
 interface IModalidadeService{
-    id: number;
+    id: string;
     modalidade: string;
 }
 
@@ -10,7 +10,7 @@ class ModalidadeService{
 
     async execute({id, modalidade} : IModalidadeService){
         
-        const modalidadeRepository = getCustomRepository(ModalidadesRepositories);
+        const modalidadeRepository = getCustomRepository(ModalidadeRepositories);
 
         if(!id){
             throw new Error("Identificador incorreto!");
@@ -45,6 +45,17 @@ class ModalidadeService{
 
         return modal;
 
+    }
+
+    async showModalidade(id: string){
+        const modalidadeRepositories = getCustomRepository(ModalidadeRepositories);
+
+        const modalidade = await modalidadeRepositories
+        .createQueryBuilder("modalidade")
+        .where("modalidade.id like :id", { id: `%${id}%` })
+        .getOne();
+
+        return modalidade
     }
 
 }

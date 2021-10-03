@@ -16,14 +16,11 @@ class AtuacaoController{
         return res.json(atua);
     }
 
-    async list(req: Request, res: Response) {
+    async listAtuacao(req: Request, res: Response) {
         const atuacaoService = new AtuacaoService();
-        const {id, atuacao} = req.body;
+        const {atuacao_id} = req.params;
     
-        const atuacaoList = await atuacao.show({
-            id,
-            atuacao
-        });
+        const atuacaoList = await atuacaoService.showAtuacao(atuacao_id);
     
         return res.json(atuacaoList);
       }

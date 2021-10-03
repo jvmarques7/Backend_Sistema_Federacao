@@ -1,6 +1,6 @@
 import {MigrationInterface, QueryRunner, Table} from "typeorm";
 
-export class CreateUser1632338894779 implements MigrationInterface {
+export class CreateUser1633211821481 implements MigrationInterface {
 
     public async up(queryRunner: QueryRunner): Promise<void> {
         await queryRunner.createTable(
@@ -79,22 +79,17 @@ export class CreateUser1632338894779 implements MigrationInterface {
                     },
                     {
                         name: "modalidade_id",
-                        type: "integer",
+                        type: "varchar",
                         isNullable: true
                     },
                     {
                         name: "categoria_id",
-                        type: "integer",
-                        isNullable: true
-                    },
-                    {
-                        name: "endereco_id",
                         type: "varchar",
                         isNullable: true
                     },
                     {
                         name: "atuacao_id",
-                        type: "integer",
+                        type: "varchar",
                         isNullable: true
                     },
                     {
@@ -122,14 +117,6 @@ export class CreateUser1632338894779 implements MigrationInterface {
                         referencedTableName: "categoria",
                         referencedColumnNames: ["id"],
                         columnNames: ["categoria_id"],
-                        onDelete: "RESTRICT",
-                        onUpdate: "CASCADE"
-                    },
-                    {
-                        name: "FKEndereco",
-                        referencedTableName: "endereco",
-                        referencedColumnNames: ["id"],
-                        columnNames: ["endereco_id"],
                         onDelete: "RESTRICT",
                         onUpdate: "CASCADE"
                     },
