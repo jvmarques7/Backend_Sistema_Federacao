@@ -135,6 +135,8 @@ CREATE TABLE IF NOT EXISTS `useradmin` (
 
 -- Copiando dados para a tabela sistema-fgb.useradmin: ~0 rows (aproximadamente)
 /*!40000 ALTER TABLE `useradmin` DISABLE KEYS */;
+INSERT INTO `useradmin` (`username`, `password`, `id`, `created_at`, `updated_at`) VALUES
+	('admin', '$2a$08$bjiu2IVKzKrsnMb7suH35.a6ntRTdUWhRyruHpZWQQu3i/QHJak9K', 'eeb2faff-c605-48e6-abef-21b494306e55', '2021-10-03 12:35:06.362209', '2021-10-03 12:35:06.362209');
 /*!40000 ALTER TABLE `useradmin` ENABLE KEYS */;
 
 -- Copiando estrutura para tabela sistema-fgb.users
