@@ -215,7 +215,7 @@ class UserService {
           process.env.SECRET,
         {
           subject: user.id,
-          expiresIn: "86400",
+          expiresIn: "300",
         }
       );
 
