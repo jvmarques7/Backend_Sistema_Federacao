@@ -28,6 +28,8 @@ router.put("/endereco_update", enderecoController.update, ensureAuthenticated);
 router.put("/control_event/:id", eventController.control)
 router.get("/event", eventController.findEvent)
 
+router.delete("/delete_event/:id", eventController.excluirEvento)
+
 router.get("/buscar_cpf/:cpf", userController.listByCpf);
 router.post("/user_admin", userAdminController.create);
 

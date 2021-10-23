@@ -65,6 +65,25 @@ class EventController{
       return res.status(200).json(controlEvent);
       }
 
+      async excluirEvento(req: Request, res: Response){
+        const eventsService = new EventService();
+        const {id} = req.params; 
+
+        const numberId = parseInt(id)
+
+        try{
+          const eventDeleted = await eventsService.deleteEvent(numberId);
+          if(eventDeleted.affected){
+            return res.status(200).json('Event deleted suscessfuly!')
+          }
+          return res.status(404).json('Event not found!')
+        }catch(err){
+          const error = new Error(err);
+
+          return res.status(500).json({ err: error.message });
+        }
+      }
+
 }
 
 export {EventController}

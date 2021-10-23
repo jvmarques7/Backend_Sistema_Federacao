@@ -71,6 +71,12 @@ class EventService{
         return event;
       }
     
+      async deleteEvent(id) {
+        const eventRepository = getCustomRepository(EventRepositories);
+    
+          const deleted = await eventRepository.delete(id)
+          return deleted
+      }
 
 }
 
